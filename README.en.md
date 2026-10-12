@@ -3,7 +3,7 @@
 **A "Delete conversation…" row that sits right under "Archive session" in the DeepSeek Harness sidebar.**
 Pick a scope, then remove the conversation for good — together with the files you chose to take with it.
 
-English | [简体中文](README.md)
+English | [简体中文](README.md) | Repository: <https://github.com/hshh603/dsh-session-purge>
 
 > ⚠️ Deletion cannot be undone. The plugin shows you the Host's scan before it touches anything, and the confirm button stays disabled until you acknowledge it. Try it on a conversation you do not need first.
 
@@ -132,32 +132,35 @@ node verify/verify-host.mjs   # or: pnpm verify
 
 The suite runs against a scratch DSH home with a stub `sessionPersistence` and `webServer`, and asserts the real outcome of all three scopes — including "a file outside the working directory is untouched", "a file the conversation never wrote is untouched", "an attachment still referenced elsewhere is kept", "a traversal-shaped id is refused", and "a cross-origin request is refused". Maintainer notes (DSH contracts, pitfalls, debugging paths) live in [AGENTS.md](AGENTS.md).
 
-## Publishing to a Git repository / npm
+## Repository and publishing
 
-1. Replace the three `OWNER` placeholders in `package.json` with your GitHub username:
+Repository: <https://github.com/hshh603/dsh-session-purge> — `package.json`'s `repository`, `homepage` and `bugs` all point at it.
 
-   ```json
-   "repository": { "url": "git+https://github.com/OWNER/dsh-session-purge.git" },
-   "homepage": "https://github.com/OWNER/dsh-session-purge#readme",
-   "bugs": { "url": "https://github.com/OWNER/dsh-session-purge/issues" }
-   ```
+### Install from the repository
 
-2. Initialize and push (Git must be installed locally; GitHub's web uploader or GitHub Desktop work too):
+```powershell
+git clone https://github.com/hshh603/dsh-session-purge.git
+mklink /J "%USERPROFILE%\.dsh\profiles\desktop\node_modules\dsh-session-purge" "%CD%\dsh-session-purge"
+```
 
-   ```sh
-   git init
-   git add .
-   git commit -m "feat: dsh-session-purge 0.1.0"
-   git branch -M main
-   git remote add origin https://github.com/OWNER/dsh-session-purge.git
-   git push -u origin main
-   ```
+Then add the `- insert:` block from [Install](#install) to the profile's `cordis.patch.yml` and restart DSH.
 
-3. Publish to npm (optional; afterwards `dsh plugin add dsh-session-purge` works):
+### Push an update
 
-   ```sh
-   npm publish
-   ```
+```sh
+git add -A
+git commit -m "fix: ..."
+git push
+```
+
+### Publish to npm (optional)
+
+Afterwards `dsh plugin --profile desktop add dsh-session-purge` works:
+
+```sh
+npm login
+npm publish
+```
 
 The repository already carries `.gitignore`, `.gitattributes` (LF everywhere, Chinese kept as byte-exact UTF-8), `.editorconfig`, and a GitHub Actions workflow that runs the syntax checks and the offline suite on three platforms × Node 22/24.
 

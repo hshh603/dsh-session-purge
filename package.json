@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "description": "在会话「归档」旁增加「删除对话」：可选删除模式，永久删除对话记录及其产出的文件 · Delete a DeepSeek Harness conversation for good, with a selectable scope.",
   "license": "MIT",
-  "author": "dsh-session-purge contributors",
+  "author": "hshh603 (https://github.com/hshh603)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-session-purge.git"
+    "url": "git+https://github.com/hshh603/dsh-session-purge.git"
   },
-  "homepage": "https://github.com/OWNER/dsh-session-purge#readme",
+  "homepage": "https://github.com/hshh603/dsh-session-purge#readme",
   "bugs": {
-    "url": "https://github.com/OWNER/dsh-session-purge/issues"
+    "url": "https://github.com/hshh603/dsh-session-purge/issues"
   },
   "type": "module",
   "main": "lib/index.js",

@@ -3,7 +3,7 @@
 **在 DeepSeek Harness 的会话「⋯」菜单里，紧挨着「归档会话」加一行「删除对话…」。**
 选择删除范围后，永久删除这个对话——以及你选择让它带走的文件。
 
-[English](README.en.md) | 简体中文
+[English](README.en.md) | 简体中文 | 仓库：<https://github.com/hshh603/dsh-session-purge>
 
 > ⚠️ 删除不可撤销。插件把宿主端扫描出来的删除清单先摆在你面前，勾选确认后才会动手。请先拿一个不需要的对话试一次。
 
@@ -132,32 +132,35 @@ node verify/verify-host.mjs   # 或 pnpm verify
 
 套件用临时 DSH home 和桩 `sessionPersistence` / `webServer`，覆盖三档实际删除结果，含"工作目录外的文件不动""没写过的文件不动""仍被引用的附件不动""路径穿越 id 被拒""跨站请求被拒"等用例。维护者须知（DSH 契约、坑与调试路径）见 [AGENTS.md](AGENTS.md)。
 
-## 发布到 Git 仓库 / npm
+## 仓库与发布
 
-1. 把 `package.json` 里的三处 `OWNER` 换成你的 GitHub 用户名：
+仓库：<https://github.com/hshh603/dsh-session-purge>（`package.json` 的 `repository` / `homepage` / `bugs` 都指向它）。
 
-   ```json
-   "repository": { "url": "git+https://github.com/OWNER/dsh-session-purge.git" },
-   "homepage": "https://github.com/OWNER/dsh-session-purge#readme",
-   "bugs": { "url": "https://github.com/OWNER/dsh-session-purge/issues" }
-   ```
+### 从仓库安装
 
-2. 初始化并推送（本机需要先装 Git；没有 Git 也可以用 GitHub 网页上传或用 GitHub Desktop）：
+```powershell
+git clone https://github.com/hshh603/dsh-session-purge.git
+mklink /J "%USERPROFILE%\.dsh\profiles\desktop\node_modules\dsh-session-purge" "%CD%\dsh-session-purge"
+```
 
-   ```sh
-   git init
-   git add .
-   git commit -m "feat: dsh-session-purge 0.1.0"
-   git branch -M main
-   git remote add origin https://github.com/OWNER/dsh-session-purge.git
-   git push -u origin main
-   ```
+再把 [安装](#安装) 里的 `- insert:` 块加到 profile 的 `cordis.patch.yml`，重启 DSH。
 
-3. 发布到 npm（可选，之后即可 `dsh plugin add dsh-session-purge`）：
+### 提交更新
 
-   ```sh
-   npm publish
-   ```
+```sh
+git add -A
+git commit -m "fix: ..."
+git push
+```
+
+### 发布到 npm（可选）
+
+发布后即可 `dsh plugin --profile desktop add dsh-session-purge`：
+
+```sh
+npm login
+npm publish
+```
 
 仓库里已经带好 `.gitignore`、`.gitattributes`（强制 LF、中文按 UTF-8 原样保存）、`.editorconfig` 与 GitHub Actions（三平台 × Node 22/24 跑语法检查 + 离线验证）。
 
