@@ -1,0 +1,43 @@
+name: verify
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: ${{ matrix.os }} / node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ["22", "24"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # The Host half is a plain ESM module with no build step; the browser half
+      # is a hand-written bundle in the loader's own format. Both must parse.
+      - name: Syntax check the Host half
+        run: node --check lib/index.js
+
+      - name: Syntax check the browser half
+        run: node --check lib/client.js
+
+      # The suite is the project's real acceptance test: it drives the plan and
+      # the purge against a stub Host context and a scratch DSH home, and asserts
+      # both what is selected and what is actually removed.
+      - name: Offline verification suite
+        run: node verify/verify-host.mjs
+
+      - name: Package manifest sanity
+        run: node -e "const fs=require('node:fs');const m=JSON.parse(fs.readFileSync('package.json','utf8'));if(!m.dsh||!m.dsh.bundle||!m.dsh.client||m.dsh.client.platform!=='web')throw new Error('manifest lost its dsh declarations');console.log('manifest ok',m.name,m.version)"

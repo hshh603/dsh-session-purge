@@ -1,0 +1,64 @@
+{
+  "name": "dsh-session-purge",
+  "version": "0.1.0",
+  "description": "在会话「归档」旁增加「删除对话」：可选删除模式，永久删除对话记录及其产出的文件 · Delete a DeepSeek Harness conversation for good, with a selectable scope.",
+  "license": "MIT",
+  "author": "dsh-session-purge contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-session-purge.git"
+  },
+  "homepage": "https://github.com/OWNER/dsh-session-purge#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-session-purge/issues"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "verify",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "verify": "node verify/verify-host.mjs"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "plugin",
+    "session",
+    "conversation",
+    "delete",
+    "purge",
+    "cleanup"
+  ],
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    },
+    "compatibility": {
+      "dshReleases": {
+        "0.2.0-rc.2": "compatible"
+      }
+    }
+  }
+}

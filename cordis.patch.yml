@@ -1,0 +1,8 @@
+# dsh-session-purge bundle layer: mounted by the plugin manager (or a profile
+# link), so a profile gets the row without hand-editing its patch file.
+#
+# The row id is the settings namespace only for a Host half that exports a
+# `Config` schema; this plugin declares none, so the id is just an entry name.
+- insert:
+    - id: session-purge
+      name: dsh-session-purge

@@ -1,0 +1,17 @@
+# Normalize every text file to LF in the repository, whatever the working
+# checkout does. The sources carry Chinese text in UTF-8 without a BOM; git must
+# never rewrite their bytes.
+* text=auto eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+
+# Binary assets, should any be added later.
+*.png binary
+*.jpg binary
+*.webp binary
+*.zst binary
+*.zstd binary

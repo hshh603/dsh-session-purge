@@ -1,0 +1,17 @@
+# Dependencies and local state — never commit either.
+node_modules/
+.scratch/
+pnpm-debug.log*
+npm-debug.log*
+yarn-error.log*
+
+# Packed artifacts
+*.tgz
+*.zip
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
